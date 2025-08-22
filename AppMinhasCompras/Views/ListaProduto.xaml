@@ -2,9 +2,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppMinhasCompras.Views.ListaProduto"
-             Title="Lista Produto">
+             Title="Minhas Compras">
 
-    <!-- Inicio de personalização da tela,pra finar mais bonido no emulador -->
+
+    <ContentPage.ToolbarItems>
+        
+        <ToolbarItem Text="Somar" />
+        <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked" />
+        
+        </ContentPage.ToolbarItems>
+    
+        <!-- Inicio de personalização da tela,pra finar mais bonido no emulador -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#0EA5A0" Offset="0.0" />

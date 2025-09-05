@@ -15,33 +15,51 @@ public partial class ListaProduto : ContentPage
 
 	}
     protected async override void OnAppearing()
-	{
-		List<Produto> tmp = await App.Db.GetAll();
+    { //inclusao try catch
+        try 
+        {
+            lista.Clear();
 
-		tmp.ForEach(i => lista.Add(i));	
-	}
+            List<Produto> tmp = await App.Db.GetAll();
+
+            tmp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex)
+        {
+           await DisplayAlert("Ops", ex.Message, "OK");
+
+        }
+    }
 
     private void ToolbarItem_Clicked(object sender, EventArgs e)
     {
 		try
 		{
 			Navigation.PushAsync(new Views.NovoProduto());
-		} catch (Exception ex)
+		}
+        catch (Exception ex)
 		{
 			DisplayAlert("ops", ex.Message, "OK");
 		}
     }
 
     private async void txt_search_TextChanged_1(object sender, TextChangedEventArgs e)
-    {
-        string q = e.NewTextValue;
+    {//inclusao try cath
+        try
+        {
+            string q = e.NewTextValue;
 
-        lista.Clear();
+            lista.Clear();
 
-        List<Produto> tmp = await App.Db.Search(q);
+            List<Produto> tmp = await App.Db.Search(q);
 
-        tmp.ForEach(i => lista.Add(i));
+            tmp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex)
+        {
+           await DisplayAlert("ops", ex.Message, "OK");
 
+        }
     }
 
     private void ToolbarItem_Clicked_1(object sender, EventArgs e)
@@ -51,35 +69,50 @@ public partial class ListaProduto : ContentPage
 
 		DisplayAlert("Total dos Produtos", msg, "OK");
 
-
     }
 
     private async void MenuItem_Clicked(object sender, EventArgs e)
     {
-		// parte a ser criada com ajuda da IA, sem alterar ou descaracterizar o que foi feito até aqui
+		//Codigo refeito seguindo a video aula do professor Thiago, assim esta funcionando a navegação e os botões de ação para excluir.
 		{
-			if (sender is MenuItem mi && mi.CommandParameter is Produto p)
-			{
-				bool ok = await DisplayAlert("Remover", $"Excluir' {p.Descricao}'?", "Sim", "Não");
-				if (ok) return;
+            try
+            {
+                MenuItem selecinado = sender as MenuItem;
+                Produto p = selecinado.BindingContext as Produto;
 
-				try
-				{
-
-                    // se seu repositório tiver Delete(Produto p):
+                bool confirm = await DisplayAlert("Tem Certeza?", "Remover Produto?", "Sim", "Não");
+                if (confirm)
+                {
                     await App.Db.Delete(p.Id);
-
-                    // (alternativa) se for Delete(int id), use:
-                    // await App.Db.Delete(p.Id);
-
-                    lista.Remove(p); // atualiza a UI
+                    lista.Remove(p);
                 }
+            }
                 catch (Exception ex)
                 {
                     await DisplayAlert("Ops", ex.Message, "OK");
                 }
-            }
+        }
+    }
+
+    private void lst_produtos_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        //criado junto com a video aula para navegar da tela produto para a tela de edição do p
+    {
+        try
+        {
+            Produto p = e.SelectedItem as Produto;
+
+            Navigation.PushAsync(new Views.EditarProduto
+            {
+                BindingContext = p,
+            });
+
+        }
+        catch (Exception ex)
+        {
+            DisplayAlert("Ops", ex.Message, "OK");
         }
 
     }
 }
+
+

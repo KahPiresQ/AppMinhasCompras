@@ -3,7 +3,7 @@
 namespace AppMinhasCompras.Models
 {
   public class Produto
-    {
+    {// feito na aula 5 para não permitir registro sem informação.
         string _descricao;
 
         [PrimaryKey, AutoIncrement]

@@ -1,4 +1,5 @@
-﻿using AppMinhasCompras.Helpers;
+﻿using System.Globalization;
+using AppMinhasCompras.Helpers;
 
 namespace AppMinhasCompras
 {
@@ -25,7 +26,9 @@ namespace AppMinhasCompras
         public App()
         {
             InitializeComponent();
+            //inclusão de Current seguindo aula 6
 
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
             // MainPage = new AppShell();
             //vincular a tela principal a tela de navegação desejado. no caso Listaproduto
 

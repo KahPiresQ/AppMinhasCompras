@@ -9,8 +9,9 @@
 
         <ToolbarItem Text="Somar" Clicked="ToolbarItem_Clicked_1" />
         <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked" />
-        
-        </ContentPage.ToolbarItems>
+        <ToolbarItem Text="Relatório" Clicked="AbrirRelatorio_Clicked"/>
+
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -19,41 +20,58 @@
         </ResourceDictionary>
     </ContentPage.Resources>
         
-        <!-- Inicio de personalização da tela,pra finar mais bonido no emulador -->
+        <!-- personalização da tela,pra finar mais bonido no emulador -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#0EA5A0" Offset="0.0" />
-            <GradientStop Color="#128C43" Offset="1.0" />
+            <GradientStop Color="#E4E7EB" Offset="0.0" />
+            <GradientStop Color="#F5F7FA" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
     <StackLayout>
         <SearchBar x:Name="txt_search" 
                    Margin="-15, 0, 0, 0"
-                   Placeholder="Busca de Produtos"
+                   Placeholder="Busca de Produtos" 
+                    HorizontalTextAlignment="Center"
                    TextChanged="txt_search_TextChanged_1"/>
         
+        <!-- Filtro por categoria dentro do MESMO StackLayout AG6-->
+        <HorizontalStackLayout Margin="10,0" Spacing="10">
+            <Label Text="Categoria:" VerticalTextAlignment="Center"/>
+            <Picker x:Name="pkFiltroCategoria"
+          
+      SelectedIndexChanged="pkFiltroCategoria_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Todas</x:String>
+                    <x:String>Alimentos</x:String>
+                    <x:String>Higiene</x:String>
+                    <x:String>Limpeza</x:String>
+                </Picker.Items>
+            </Picker>
+        </HorizontalStackLayout>
+        
+        
+        
         <Frame Padding="0" Margin="10" VerticalOptions="FillAndExpand"
-               BackgroundColor="#0EA5A0">
+               BackgroundColor="#9AA5B1">
+            
             
           <ListView x:Name="lst_produtos"  
                   IsPullToRefreshEnabled="True"
                   Refreshing="lst_produtos_Refreshing"
                   ItemSelected="lst_produtos_ItemSelected">
-              
-            <ListView.Header>
-                <Grid ColumnDefinitions="30,100,80,50,90"
-                      BackgroundColor="#128C43">
 
-                        <Label Grid.Column="0" Text="ID"  Padding="5"  FontAttributes="Bold" />
-                        <Label Grid.Column="1" Text="Descrição" FontAttributes="Bold" />
-                        <Label Grid.Column="2" Text="Preço" FontAttributes="Bold" />
-                        <Label Grid.Column="3" Text="Qnt" FontAttributes="Bold"/>
-                    <Label Grid.Column="4" Text="Total" FontAttributes="Bold"/>
-                </Grid>
-            </ListView.Header>
+                <ListView.Header>
+                    <Grid ColumnDefinitions="30,100,80,50,90" BackgroundColor="#1E3A5F" Padding="5">
+                        <Label Grid.Column="0" Text="ID" TextColor="White" FontAttributes="Bold"/>
+                        <Label Grid.Column="1" Text="Descrição" TextColor="White" FontAttributes="Bold"/>
+                        <Label Grid.Column="2" Text="Preço" TextColor="White" FontAttributes="Bold"/>
+                        <Label Grid.Column="3" Text="Qnt" TextColor="White" FontAttributes="Bold"/>
+                        <Label Grid.Column="4" Text="Total" TextColor="White" FontAttributes="Bold"/>
+                    </Grid>
+                </ListView.Header>
 
-            <ListView.ItemTemplate>
+                <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.ContextActions>

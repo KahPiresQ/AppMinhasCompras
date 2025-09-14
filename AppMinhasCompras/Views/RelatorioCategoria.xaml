@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMinhasCompras.Views.RelatorioCategoria"
+             Title="Relatório por Categoria">
+
+    <VerticalStackLayout Padding="10">
+        <ListView x:Name="lstRelatorio"
+          HasUnevenRows="True"
+          Margin="10">
+
+            <ListView.Header>
+                <Grid ColumnDefinitions="*,Auto" Padding="5" BackgroundColor="#1E3A5F">
+                    <Label Grid.Column="0" Text="Categoria" 
+                   TextColor="White" FontAttributes="Bold"/>
+                    <Label Grid.Column="1" Text="Total" 
+                   TextColor="White" FontAttributes="Bold"/>
+                </Grid>
+            </ListView.Header>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid ColumnDefinitions="*,Auto" Padding="5">
+                            <Label Grid.Column="0" Text="{Binding Categoria}" FontAttributes="Bold"/>
+                            <Label Grid.Column="1" Text="{Binding Soma, StringFormat='{}{0:C}'}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>

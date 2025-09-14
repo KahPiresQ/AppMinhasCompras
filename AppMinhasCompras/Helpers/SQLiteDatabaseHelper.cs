@@ -49,12 +49,33 @@ namespace AppMinhasCompras.Helpers
 
         // SEARCH procura por descrição contendo "q".
         // CORREÇÃO  faltava o FROM 
+
+        // SEARCH: procura por descrição OU categoria contendo "q" ag6
         public Task<List<Produto>> Search(string q)
         {
-            string sql = "SELECT * FROM Produto WHERE Descricao LIKE '%" + q + "%'";
-            return _conn.QueryAsync<Produto>(sql);
+            string like = $"%{q}%";
+            string sql = "SELECT * FROM Produto WHERE Descricao LIKE ? OR Categoria LIKE ?";
+            return _conn.QueryAsync<Produto>(sql, like, like);
+        }
+        // RELATÓRIO: soma de gastos por categoria fihcario 6
+        public Task<List<CategoriaTotal>> GetTotaisPorCategoria()
+        {
+            string sql = @"
+        SELECT 
+            CASE 
+                WHEN Categoria IS NULL OR Categoria = '' 
+                THEN 'Sem categoria' 
+                ELSE Categoria 
+            END AS Categoria,
+            SUM(Quantidade * Preco) AS Soma
+        FROM Produto
+        GROUP BY Categoria
+        ORDER BY Soma DESC";
+
+            return _conn.QueryAsync<CategoriaTotal>(sql);
         }
     }
+
 }
 
 

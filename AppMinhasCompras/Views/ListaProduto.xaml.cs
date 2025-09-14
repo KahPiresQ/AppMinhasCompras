@@ -139,6 +139,31 @@ public partial class ListaProduto : ContentPage
         }
 
     }
+
+    private async void AbrirRelatorio_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new RelatorioCategoria());
+    }
+
+    // ação criada para uso do  filtro por categoria
+    private async void pkFiltroCategoria_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var cat = pkFiltroCategoria.SelectedItem?.ToString();
+
+        lst_produtos.IsRefreshing = true;
+        try
+        {
+            lista.Clear();
+            var tmp = string.IsNullOrWhiteSpace(cat) || cat == "Todas"
+                ? await App.Db.GetAll()
+                : await App.Db.Search(cat); // Search já filtra por Descrição OU Categoria
+            tmp.ForEach(i => lista.Add(i));
+        }
+        finally
+        {
+            lst_produtos.IsRefreshing = false;
+        }
+    }
 }
 
 

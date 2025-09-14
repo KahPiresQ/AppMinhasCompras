@@ -24,5 +24,7 @@ namespace AppMinhasCompras.Models
 
         public double Total { get => Quantidade * Preco; }
 
+        //  NOVO CAMPO (Agenda 6 – Desafio 1)
+        public string Categoria { get; set; } = "Sem categoria";
     }
 }
